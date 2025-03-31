@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Attendance System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            text-align: center;
+            color: white;
+            background: ('student.webp') ;
+        }
+        .container {
+            width: 400px;
+            margin: auto;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            margin-top: 50px;
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        button {
+            background: green;
+            color: white;
+            border: none;
+        }
+        .features {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="home">
+        
+            <h2>Features</h2>
+            <ul>
+                <li>Secure Login and Registration</li>
+                <li>Location-Based Attendance Marking</li>
+                <li>Real-Time IP Address Tracking</li>
+                <li>Automatic Attendance Status</li>
+                <li>Responsive and User-Friendly Design</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container" id="register" style="display:none;">
+        <h2>Register</h2>
+        <input type="text" id="regName" placeholder="Name">
+        <input type="email" id="regEmail" placeholder="Email">
+        <input type="password" id="regPassword" placeholder="Password">
+        <button onclick="registerUser()">Submit</button>
+    </div>
+
+    <div class="container" id="login" style="display:none;">
+        <h2>Login</h2>
+        <input type="email" id="loginEmail" placeholder="Email">
+        <input type="password" id="loginPassword" placeholder="Password">
+        <button onclick="loginUser()">Login</button>
+    </div>
+
+    <script>
+        function showRegister() {
+            document.getElementById('home').style.display = 'none';
+            document.getElementById('register').style.display = 'block';
+        }
+        function showLogin() {
+            document.getElementById('home').style.display = 'none';
+            document.getElementById('login').style.display = 'block';
+        }
+        function registerUser() {
+            alert("Registered Successfully!");
+            document.getElementById('register').style.display = 'none';
+            document.getElementById('login').style.display = 'block';
+        }
+        function loginUser() {
+            alert("Login Successful!");
+            document.getElementById('login').style.display = 'none';
+            // Redirect to attendance page
+            window.location.href = 'attendance.html';
+        }
+    </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Attendance System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            text-align: center;
+            color: white;
+            background-attachment: "student.webp";
+        }
+        .container {
+            width: 500px;
+            margin: auto;
+            padding: 40px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            margin-top: 50px;
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        button {
+            background: green;
+            color: blueviolet;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="welcome">
+        <h2>Welcome to Student Attendance System</h2>
+        <button onclick="showRegister()">Register</button>
+        <button onclick="showLogin()">Login</button>
+    </div>
+
+    <div class="container" id="register" style="display:none;">
+        <h2>Register</h2>
+        <input type="text" id="regName" placeholder="Name">
+        <input type="email" id="regEmail" placeholder="Email">
+        <input type="password" id="regPassword" placeholder="Password">
+        <button onclick="registerUser()">Submit</button>
+    </div>
+
+    <div class="container" id="login" style="display:none;">
+        <h2>Login</h2>
+        <input type="email" id="loginEmail" placeholder="Email">
+        <input type="password" id="loginPassword" placeholder="Password">
+        <button onclick="loginUser()">Login</button>
+    </div>
+
+    <div class="container" id="attendance" style="display:none;">
+        <h2>Mark Attendance</h2>
+        <input type="text" id="studentName" placeholder="Name">
+        <input type="text" id="rollNo" placeholder="Roll Number">
+        <p id="location"></p>
+        <p id="ipAddress"></p>
+        <p id="status"></p>
+        <button onclick="markAttendance()">Submit Attendance</button>
+    </div>
+
+    <script>
+        function showRegister() {
+            document.getElementById('welcome').style.display = 'none';
+            document.getElementById('register').style.display = 'block';
+        }
+        function showLogin() {
+            document.getElementById('welcome').style.display = 'none';
+            document.getElementById('login').style.display = 'block';
+        }
+        function registerUser() {
+            alert("Registered Successfully!");
+            document.getElementById('register').style.display = 'none';
+            document.getElementById('login').style.display = 'block';
+        }
+        function loginUser() {
+            alert("Login Successful!");
+            document.getElementById('login').style.display = 'none';
+            document.getElementById('attendance').style.display = 'block';
+            getLocation();
+            getIPAddress();
+        }
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    document.getElementById('location').innerText = `Location: ${position.coords.latitude}, ${position.coords.longitude}`;
+                });
+            } else {
+                document.getElementById('location').innerText = "Geolocation is not supported.";
+            }
+        }
+        async function getIPAddress() {
+            let response = await fetch('https://api64.ipify.org?format=json');
+            let data = await response.json();
+            document.getElementById('ipAddress').innerText = `IP Address: ${data.ip}`;
+        }
+        function markAttendance() {
+            let name = document.getElementById('studentName').value;
+            let rollNo = document.getElementById('rollNo').value;
+            if (name && rollNo) {
+                document.getElementById('status').innerText = "Attendance Marked: Present";
+            } else {
+                document.getElementById('status').innerText = "Attendance Marked: Absent";
+            }
+        }
+    </script>
+</body>
+</html>
